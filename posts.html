@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Posts</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-4 max-h-screen">
+
+    <header class="flex">
+        <h1 class="text-3xl font-bold mb-4 text-blue-900 flex-1">Business Directory</h1>
+
+        <!-- Navigation Bar -->
+        <nav class="flex justify-end gap-4 mb-4">
+            <a href="index.html" class="text-blue-900 font-bold text-xl">Companies</a>
+            <a href="posts.html" class="text-blue-900 font-bold text-xl">Posts</a>
+        </nav>
+    </header>
+
+    <!-- Create tiles for posts -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dummy Posts -->
+        <div class="p-4 border rounded-md bg-white shadow-lg">
+            <h2 class="text-2xl font-bold mb-2 text-blue-900">Seeking Investors</h2>
+            <h2 class="text-xl font-bold mb-2 text-blue-900">ABC Solutions</h2>
+            <p class="text-gray-700 mb-4">We are looking for potential investors to help us scale our technology solutions. With a proven track record and a strong team, we are poised for rapid growth.</p>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onclick="showContactForm('ABC Solutions')">Contact</button>
+        </div>
+
+        <!-- Tile 2: Looking for Investors -->
+        <div class="p-4 border rounded-md bg-white shadow-lg">
+            <h2 class="text-2xl font-bold mb-2 text-blue-900">Seeking Potential Collaboration</h2>
+            <h2 class="text-xl font-bold mb-2 text-blue-900">BluePrint Architects</h2>
+            <p class="text-gray-700 mb-4">We are looking for event managers to collaborate in a project. The project will involve liasing with different vendors to ensure the event goes smoothly.</p>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onclick="showContactForm('BluePrint Architects')">Contact</button>
+        </div>
+
+        <div class="p-4 border rounded-md bg-white shadow-lg">
+            <h2 class="text-2xl font-bold mb-2 text-blue-900">Looking for Digital Marketing</h2>
+            <h2 class="text-xl font-bold mb-2 text-blue-900">Sunrise Cafes</h2>
+            <p class="text-gray-700 mb-4">We are looking for digital marketing companies that can help us be more visible and provide us with social media marketing.</p>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onclick="showContactForm('Sunrise Cafes')">Contact</button>
+        </div>
+
+        <div class="p-4 border rounded-md bg-white shadow-lg">
+            <h2 class="text-2xl font-bold mb-2 text-blue-900">Searching for Office Space</h2>
+            <h2 class="text-xl font-bold mb-2 text-blue-900">Infinite Solutions</h2>
+            <p class="text-gray-700 mb-4">We are looking for an affordable office space that can fit up to 15 workstations near Lambak.</p>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onclick="showContactForm('Infinite Solutions')">Contact</button>
+        </div>
+
+        <div class="p-4 border rounded-md bg-white shadow-lg">
+            <h2 class="text-2xl font-bold mb-2 text-blue-900">Investment Opportunities</h2>
+            <h2 class="text-xl font-bold mb-2 text-blue-900">Global Ventures</h2>
+            <p class="text-gray-700 mb-4">We are looking to invest in agriculture businesses with high potential. We can provide funding and the necessary networking to accelerate your business to a global scale.</p>
+            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onclick="showContactForm('Global Ventures')">Contact</button>
+        </div>
+
+        <!-- Add more tiles for different types of posts as needed -->
+        </div>
+
+    <!-- Contact Form Modal -->
+    <div id="contactFormModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center">
+        <div class="modal-content bg-white p-8 mx-auto max-w-md rounded">
+            <h2 class="text-2xl font-bold mb-4 text-blue-900" id="modalTitle"></h2>
+            <form id="contactForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Your Name</label>
+                    <input type="text" id="name" name="name" class="p-2 border rounded-md w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Your Email</label>
+                    <input type="email" id="email" name="email" class="p-2 border rounded-md w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="message">Message</label>
+                    <textarea id="message" name="message" class="p-2 border rounded-md w-full h-32" required></textarea>
+                </div>
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Send Message</button>
+            </form>
+            <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" id="closeModal">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to show contact form with business name
+        function showContactForm(businessName) {
+            const modal = document.getElementById('contactFormModal');
+            modal.classList.remove('hidden');
+            const modalTitle = document.getElementById('modalTitle');
+            modalTitle.textContent = `Contact ${businessName}`;
+            document.getElementById('contactForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+                console.log(data);
+                // Add code to send data here
+            });
+        }
+
+        // Function to close contact form modal
+        document.getElementById('closeModal').addEventListener('click', function() {
+            const modal = document.getElementById('contactFormModal');
+            modal.classList.add('hidden');
+        });
+    </script>
+
+</body>
+</html>

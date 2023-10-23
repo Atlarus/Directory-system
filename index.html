@@ -6,14 +6,23 @@
     <title>Business Directory</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-4">
-    <h1 class="text-3xl font-bold mb-4 text-blue-900">Business Directory</h1>
+<body class="bg-gray-100 p-4 max-h-screen">
+
+    <header class="flex">
+      <h1 class="text-3xl font-bold mb-4 text-blue-900 flex-1">Business Directory</h1>
+
+      <!-- Navigation Bar -->
+      <nav class="flex justify-end gap-4 mb-4">
+        <a href="index.html" class="text-blue-900 font-bold text-xl">Companies</a>
+        <a href="posts.html" class="text-blue-900 font-bold text-xl">Posts</a>
+      </nav>
+    </header>
 
     <!-- Create a search input -->
-    <input type="text" id="searchInput" class="p-2 border rounded mb-2 w-full" placeholder="Search for a business">
+    <input type="text" id="searchInput" class="p-2 border rounded-md mb-2 w-full" placeholder="Search for a business">
 
     <!-- Create a filter dropdown -->
-    <select id="categoryFilter" class="p-2 border rounded mb-4">
+    <select id="categoryFilter" class="p-2 border rounded-md mb-4">
         <option value="all">All Industries</option>
         <option value="technology">Technology</option>
         <option value="finance">Finance</option>
@@ -29,6 +38,11 @@
     <!-- Create a container for the directory entries -->
     <div id="directoryContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Entries will be dynamically added here -->
+    </div>
+
+    <div id="pagination" class="flex justify-center mt-4">
+      <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 mr-2" id="prevPage">Previous Page</button>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" id="nextPage">Next Page</button>
     </div>
 
     <!-- Create a modal for contact information -->
@@ -83,63 +97,94 @@
               email: 'hello@foodiedelights.com', address: '1212 Pine Way, Gourmetown, State', website: 'www.foodiedelights.com' }
         ];
 
+        // Variables for pagination
+        let currentPage = 1;
+        const entriesPerPage = 8;
+
         // Function to render directory entries
         function renderEntries() {
-            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
-            const categoryFilter = document.getElementById('categoryFilter').value;
+          const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+          const categoryFilter = document.getElementById('categoryFilter').value;
 
-            const directoryContainer = document.getElementById('directoryContainer');
-            directoryContainer.innerHTML = '';
+          const startIndex = (currentPage - 1) * entriesPerPage;
+          const endIndex = startIndex + entriesPerPage;
 
-            businesses.forEach((business, index) => {
-                if ((categoryFilter === 'all' || business.category === categoryFilter) &&
-                    business.name.toLowerCase().includes(searchQuery)) {
-                    const entry = document.createElement('div');
-                    entry.classList.add('p-4', 'border', 'rounded', 'bg-white', 'cursor-pointer', 'shadow-lg');
+          const directoryContainer = document.getElementById('directoryContainer');
+          directoryContainer.innerHTML = '';
 
-                    const image = document.createElement('img');
-                    image.src = business.image;
-                    image.classList.add('w-full', 'mb-2');
-                    entry.appendChild(image);
+          businesses.slice(startIndex, endIndex).forEach((business, index) => {
+              if ((categoryFilter === 'all' || business.category === categoryFilter) &&
+                  business.name.toLowerCase().includes(searchQuery)) {
+                  const entry = document.createElement('div');
+                  entry.classList.add('p-4', 'border', 'rounded-md', 'bg-white', 'cursor-pointer', 'shadow-lg');
 
-                    const name = document.createElement('p');
-                    name.textContent = business.name;
-                    entry.appendChild(name);
+                  const image = document.createElement('img');
+                  image.src = business.image;
+                  image.classList.add('w-full', 'mb-2');
+                  entry.appendChild(image);
 
-                    // Add event listener to show modal on click
-                    entry.addEventListener('click', () => showModal(business));
+                  const name = document.createElement('p');
+                  name.textContent = business.name;
+                  name.classList.add('text-center');
+                  entry.appendChild(name);
 
-                    directoryContainer.appendChild(entry);
-                }
-            });
-        }
+                  // Add event listener to show modal on click
+                  entry.addEventListener('click', () => showModal(business));
 
-        // Function to show modal with contact information
-        function showModal(business) {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('hidden');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalEmail = document.getElementById('modalEmail');
-            const modalAddress = document.getElementById('modalAddress');
-            const modalWebsite = document.getElementById('modalWebsite');
+                  directoryContainer.appendChild(entry);
+              }
+          });
 
-            modalTitle.textContent = business.name;
-            modalEmail.textContent = business.email;
-            modalAddress.textContent = business.address;
-            modalWebsite.textContent = business.website;
-            modalWebsite.href = 'http://' + business.website;
+          // Update pagination buttons
+          const prevPageButton = document.getElementById('prevPage');
+          const nextPageButton = document.getElementById('nextPage');
 
-            // Add event listener to close modal
-            const closeModal = document.getElementById('closeModal');
-            closeModal.addEventListener('click', () => modal.classList.add('hidden'));
-        }
+          prevPageButton.disabled = currentPage === 1;
+          nextPageButton.disabled = endIndex >= businesses.length;
+      }
 
-        // Event listeners for search and filter
-        document.getElementById('searchInput').addEventListener('input', renderEntries);
-        document.getElementById('categoryFilter').addEventListener('change', renderEntries);
+      // Function to show modal with contact information
+      function showModal(business) {
+          const modal = document.getElementById('modal');
+          modal.classList.remove('hidden');
+          const modalTitle = document.getElementById('modalTitle');
+          const modalEmail = document.getElementById('modalEmail');
+          const modalAddress = document.getElementById('modalAddress');
+          const modalWebsite = document.getElementById('modalWebsite');
 
-        // Initial render
-        renderEntries();
-    </script>
+          modalTitle.textContent = business.name;
+          modalEmail.textContent = business.email;
+          modalAddress.textContent = 'Address: ' + business.address;
+          modalWebsite.textContent = business.website;
+          modalWebsite.href = 'http://' + business.website;
+
+          // Add event listener to close modal
+          const closeModal = document.getElementById('closeModal');
+          closeModal.addEventListener('click', () => modal.classList.add('hidden'));
+      }
+
+      // Event listeners for search and filter
+      document.getElementById('searchInput').addEventListener('input', renderEntries);
+      document.getElementById('categoryFilter').addEventListener('change', renderEntries);
+
+      // Pagination event listeners
+      document.getElementById('prevPage').addEventListener('click', () => {
+          if (currentPage > 1) {
+              currentPage--;
+              renderEntries();
+          }
+      });
+
+      document.getElementById('nextPage').addEventListener('click', () => {
+          const maxPages = Math.ceil(businesses.length / entriesPerPage);
+          if (currentPage < maxPages) {
+              currentPage++;
+              renderEntries();
+          }
+      });
+
+      // Initial render
+      renderEntries();
+  </script>
 </body>
 </html>
