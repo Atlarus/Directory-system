@@ -4,6 +4,7 @@ import Layout from "./pages/layout";
 import Home from "./components/home";
 import Admin from "./components/admin";
 import Posts from "./components/posts";
+import Users from "./components/users";
 import './App.css';
 
 function App() {
@@ -47,13 +48,13 @@ function App() {
       email: 'hello@foodiedelights.com', address: '1212 Pine Way, Gourmetown, State', website: 'www.foodiedelights.com' }
   ]);
 
-  const posts = [
+  const [posts, setPosts] = useState([
     { name: "ABC Solutions", title: "Seeking Investors", desc: "We are looking for potential investors to help us scale our technology solutions. With a proven track record and a strong team, we are poised for rapid growth." },
     { name: "BluePrint Architects", title: "Seeking Potential Collaboration", desc: "We are looking for event managers to collaborate in a project. The project will involve liaising with different vendors to ensure the event goes smoothly." },
     { name: "Sunrise Cafes", title: "Looking for Digital Marketing", desc: "We are looking for digital marketing companies that can help us be more visible and provide us with social media marketing." },
     { name: "Infinite Solutions", title: "Searching for Office Space", desc: "We are looking for an affordable office space that can fit up to 15 workstations near Lambak." },
     { name: "Global Ventures", title: "Investment Opportunities", desc: "We are looking to invest in agriculture businesses with high potential. We can provide funding and the necessary networking to accelerate your business to a global scale." },
-  ];
+  ]);
 
   return (
     <BrowserRouter>
@@ -64,7 +65,8 @@ function App() {
             path="admin"
             element={<Admin businesses={businesses} setBusinesses={setBusinesses} />}
           />
-          <Route path="posts" element={<Posts posts={posts}/>} />
+          <Route path="posts" element={<Posts posts={posts} />} />
+          <Route path="users" element={<Users posts={posts} setPosts={setPosts} />} />
         </Route>
       </Routes>
     </BrowserRouter>

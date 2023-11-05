@@ -12,6 +12,7 @@ const Layout = () => {
                     <Link to="/Directory-system" className="text-blue-900 font-bold text-xl">Companies</Link>
                     <Link to="./posts" className="text-blue-900 font-bold text-xl">Posts</Link>
                     <Link to="./admin" className="text-blue-900 font-bold text-xl">Admin</Link>
+                    <Link to="./users" className="text-blue-900 font-bold text-xl">Users</Link>
                 </nav>
             </header>
 
