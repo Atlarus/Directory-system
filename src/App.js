@@ -65,6 +65,7 @@ function App() {
             element={<Admin businesses={businesses} setBusinesses={setBusinesses} />}
           />
           <Route path="posts" element={<Posts posts={posts}/>} />
+          <Route path="Directory-system" element={<Home businesses={businesses} />} />
         </Route>
       </Routes>
     </BrowserRouter>
