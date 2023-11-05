@@ -9,9 +9,9 @@ const Layout = () => {
 
                 {/* Navigation Bar */}
                 <nav className="flex justify-end gap-4 mb-4">
-                    <Link to="/" className="text-blue-900 font-bold text-xl">Companies</Link>
-                    <Link to="/posts" className="text-blue-900 font-bold text-xl">Posts</Link>
-                    <Link to="/admin" className="text-blue-900 font-bold text-xl">Admin</Link>
+                    <Link to="/Directory-system" className="text-blue-900 font-bold text-xl">Companies</Link>
+                    <Link to="./posts" className="text-blue-900 font-bold text-xl">Posts</Link>
+                    <Link to="./admin" className="text-blue-900 font-bold text-xl">Admin</Link>
                 </nav>
             </header>
 

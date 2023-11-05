@@ -18,7 +18,7 @@ const Home = ({businesses}) => {
         className="p-4 border rounded-md bg-white cursor-pointer shadow-lg"
         onClick={() => showModal(business)}
       >
-        <img src={business.image} alt={business.name} className="w-full mb-2" />
+        <img src={"https://clipground.com/images/placeholder-logo-5.png"} alt={business.name} className="w-full mb-2" />
         <p className="text-center">{business.name}</p>
       </div>
     ));
@@ -77,7 +77,7 @@ const Home = ({businesses}) => {
           <h2 className="text-2xl font-bold mb-4 text-blue-900" id="modalTitle"></h2>
           <p className="mb-2 text-gray-700" id="modalEmail"></p>
           <p className="mb-2 text-gray-700" id="modalAddress"></p>
-          <p className="mb-4"><a id="modalWebsite" href="#" target="_blank" className="text-blue-500"></a></p>
+          <p className="mb-4"><a id="modalWebsite" href="#" className="text-blue-500"></a></p>
           <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" id="closeModal">Close</button>
         </div>
       </div>
